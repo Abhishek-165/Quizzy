@@ -29,6 +29,7 @@ class QuizPage extends StatefulWidget {
 
 class _QuizPageState extends State<QuizPage> {
   int location=0;
+  int check = 0;
   List <String> questions = [
     "In January Earth is closest to the Sun.",
     "Electrons are larger than molecules.",
@@ -41,8 +42,7 @@ class _QuizPageState extends State<QuizPage> {
   {
     if(location < questions.length-1)
     {
-      print(questions.length);
-      print("Hello word");
+
       setState(() {
         location = location+1;
       });
@@ -58,6 +58,7 @@ class _QuizPageState extends State<QuizPage> {
           textColor: Colors.white,
           fontSize: 16.0
       );
+
     }
   }
 void Reset()
@@ -65,24 +66,38 @@ void Reset()
     setState(() {
       location=0;
       scoreKeeper.clear();
+      check=0;
     });
 }
 void checkanswer(bool userPicked)
 {
- setState(() {
-   if( answers[location]== userPicked)
-   {
-     scoreKeeper.add(Icon(
-       Icons.check,
-       color: Colors.green,
-     ));
-   } else {
-     scoreKeeper.add(Icon(
-       Icons.close,
-       color: Colors.red,
-     ));
-   }
- });
+
+    setState(() {
+
+
+     if(location < questions.length && check!= 1)
+       {
+         if( answers[location]== userPicked)
+         {
+           scoreKeeper.add(Icon(
+             Icons.check,
+             color: Colors.green,
+           ));
+         } else {
+           scoreKeeper.add(Icon(
+             Icons.close,
+             color: Colors.red,
+           ));
+         }
+         if(location==2){
+           check=1;
+         }
+       }
+
+
+    });
+
+
 }
   @override
   Widget build(BuildContext context) {
@@ -151,6 +166,7 @@ void checkanswer(bool userPicked)
                 ),
               ),
               onPressed: () {
+
                 checkanswer(false);
                 checkavailability();
                },
